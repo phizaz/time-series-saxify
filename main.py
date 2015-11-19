@@ -1,10 +1,10 @@
 import math
 import bisect
-
-__author__ = 'phizaz'
-
+import json
 import random
 import numpy
+
+__author__ = 'phizaz'
 
 X = 6
 Y = 3
@@ -13,11 +13,18 @@ Z = 4
 n = 2 ** X
 w = 2 ** Y
 
+def to_file(variable, file):
+    with open(file, 'w') as outfile:
+        json.dump(variable, outfile)
+
 def generate_series(length, max):
     return numpy.array([random.uniform(0, max) for i in range(length)])
 
 A = generate_series(n, X)
 B = generate_series(n, X)
+
+to_file(A.tolist(), 'time_series_A.json')
+to_file(B.tolist(), 'time_series_B.json')
 
 print('time_series A:', A)
 print('time_series B:', B)
@@ -30,6 +37,9 @@ def normalize(time_series):
 
 norm_A = normalize(A)
 norm_B = normalize(B)
+
+to_file(norm_A.tolist(), 'normalized_A.json')
+to_file(norm_B.tolist(), 'normalized_B.json')
 
 print('normalized A:', norm_A)
 print('normalized B:', norm_B)
@@ -113,11 +123,4 @@ def mindist(sax_A, sax_B, alphabet_count, word_length):
 
 dist = mindist(sax_A, sax_B, Z, n / w)
 print('distance between sax_A and sax_B:', dist)
-
-
-
-
-
-
-
 
